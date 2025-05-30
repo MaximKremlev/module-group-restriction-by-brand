@@ -4,13 +4,11 @@ declare(strict_types=1);
 
 namespace MaximKremlev\GroupRestrictionByBrand\Observer;
 
-use Exception;
 use Magento\Customer\Model\Session;
 use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
-use Magento\Framework\Exception\NotFoundException;
+use Magento\Framework\Exception\NoSuchEntityException;
 use MaximKremlev\GroupRestrictionByBrand\Helper\Data as BrandHelper;
-use MaximKremlev\GroupRestrictionByBrand\Model\ResourceModel\RestrictedBrands;
 
 /**
  * Observer for checking product access based on brand restrictions
@@ -26,20 +24,20 @@ class CheckProductViewAccess implements ObserverInterface
     private Session $customerSession;
 
     /**
-     * @var RestrictedBrands
+     * @var BrandHelper
      */
-    private RestrictedBrands $restrictedBrands;
+    private BrandHelper $brandHelper;
 
     /**
      * @param Session $customerSession
-     * @param RestrictedBrands $restrictedBrands
+     * @param BrandHelper $brandHelper
      */
     public function __construct(
         Session $customerSession,
-        RestrictedBrands $restrictedBrands
+        BrandHelper $brandHelper
     ) {
         $this->customerSession = $customerSession;
-        $this->restrictedBrands = $restrictedBrands;
+        $this->brandHelper = $brandHelper;
     }
 
     /**
@@ -47,31 +45,22 @@ class CheckProductViewAccess implements ObserverInterface
      *
      * @param Observer $observer
      * @return void
-     * @throws NotFoundException
+     * @throws NoSuchEntityException
      */
     public function execute(Observer $observer): void
     {
-        if (!$this->customerSession->isLoggedIn()) {
+        if (!$this->brandHelper->isCustomerLoggedIn()) {
             return;
         }
 
         $product = $observer->getEvent()->getProduct();
-        $brandId = $product->getData(BrandHelper::ATTRIBUTE_CODE_BRAND);
 
-        if (!$brandId) {
+        if (!$brandId = $product->getData(BrandHelper::ATTRIBUTE_CODE_BRAND)) {
             return;
         }
 
-        try {
-            $restrictedBrands = $this->restrictedBrands->getRestrictedBrandIds(
-                (int)$this->customerSession->getCustomerGroupId()
-            );
-        } catch (Exception) {
-            $restrictedBrands = [];
-        }
-
-        if (in_array($brandId, $restrictedBrands, true)) {
-            throw new NotFoundException(__('The product that was requested doesn\'t exist.'));
+        if (in_array($brandId, $this->brandHelper->getRestrictedBrandIds(), true)) {
+            throw new NoSuchEntityException(__('The product that was requested doesn\'t exist.'));
         }
     }
 }
