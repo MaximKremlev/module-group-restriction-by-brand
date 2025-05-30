@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="customer_group_restricted_brands" resource="default" engine="innodb" comment="Customer Group Restricted Brands Table">
+        <column xsi:type="int" name="entity_id" padding="10" unsigned="true" nullable="false" identity="true" comment="Entity ID"/>
+        <column xsi:type="int" name="customer_group_id" padding="10" unsigned="true" nullable="false" comment="Customer Group ID"/>
+        <column xsi:type="int" name="brand_id" padding="10" unsigned="true" nullable="false" comment="Brand Option ID"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="entity_id"/>
+        </constraint>
+        <constraint xsi:type="foreign"
+                    referenceId="CUSTOMER_GROUP_RESTRICTED_BRANDS_CUSTOMER_GROUP_ID_CUSTOMER_GROUP_CUSTOMER_GROUP_ID"
+                    table="customer_group_restricted_brands" column="customer_group_id"
+                    referenceTable="customer_group" referenceColumn="customer_group_id"
+                    onDelete="CASCADE"/>
+        <index referenceId="CUSTOMER_GROUP_RESTRICTED_BRANDS_CUSTOMER_GROUP_ID" indexType="btree">
+            <column name="customer_group_id"/>
+        </index>
+        <index referenceId="CUSTOMER_GROUP_RESTRICTED_BRANDS_BRAND_ID" indexType="btree">
+            <column name="brand_id"/>
+        </index>
+    </table>
+</schema>

@@ -1,0 +1,17 @@
+{
+    "customer_group_restricted_brands": {
+        "column": {
+            "entity_id": true,
+            "customer_group_id": true,
+            "brand_id": true
+        },
+        "index": {
+            "CUSTOMER_GROUP_RESTRICTED_BRANDS_CUSTOMER_GROUP_ID": true,
+            "CUSTOMER_GROUP_RESTRICTED_BRANDS_BRAND_ID": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "CUSTOMER_GROUP_RESTRICTED_BRANDS_CUSTOMER_GROUP_ID_CUSTOMER_GROUP_CUSTOMER_GROUP_ID": true
+        }
+    }
+}
