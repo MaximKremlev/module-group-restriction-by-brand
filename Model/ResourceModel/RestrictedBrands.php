@@ -16,12 +16,17 @@ use Magento\Framework\Model\ResourceModel\Db\AbstractDb;
  */
 class RestrictedBrands extends AbstractDb
 {
+    private const string TABLE_NAME = 'customer_group_restricted_brands';
+    private const string ENTITY_ID = 'entity_id';
+    private const string BRAND_ID = 'brand_id';
+    private const string CUSTOMER_GROUP_ID = 'customer_group_id';
+
     /**
      * @inheritDoc
      */
     protected function _construct(): void
     {
-        $this->_init('customer_group_restricted_brands', 'entity_id');
+        $this->_init(self::TABLE_NAME, self::ENTITY_ID);
     }
 
     /**
@@ -35,8 +40,8 @@ class RestrictedBrands extends AbstractDb
         try {
             $connection = $this->getConnection();
             $select = $connection->select()
-                ->from($this->getMainTable(), ['brand_id'])
-                ->where('customer_group_id = ?', $customerGroupId);
+                ->from($this->getMainTable(), [self::BRAND_ID])
+                ->where(self::CUSTOMER_GROUP_ID . ' = ?', $customerGroupId);
 
             return $connection->fetchCol($select);
         } catch (Exception) {
@@ -58,7 +63,7 @@ class RestrictedBrands extends AbstractDb
 
         $connection->delete(
             $this->getMainTable(),
-            ['customer_group_id = ?' => $customerGroupId]
+            [self::CUSTOMER_GROUP_ID . ' = ?' => $customerGroupId]
         );
 
         if (!empty($brandIds)) {
@@ -66,8 +71,8 @@ class RestrictedBrands extends AbstractDb
             foreach ($brandIds as $brandId) {
                 if ($brandId) {
                     $data[] = [
-                        'customer_group_id' => $customerGroupId,
-                        'brand_id' => $brandId
+                        self::CUSTOMER_GROUP_ID => $customerGroupId,
+                        self::BRAND_ID => $brandId
                     ];
                 }
             }

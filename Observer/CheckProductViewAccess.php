@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace MaximKremlev\GroupRestrictionByBrand\Observer;
 
-use Magento\Customer\Model\Session;
 use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
 use Magento\Framework\Exception\NoSuchEntityException;
@@ -19,24 +18,16 @@ use MaximKremlev\GroupRestrictionByBrand\Helper\Data as BrandHelper;
 class CheckProductViewAccess implements ObserverInterface
 {
     /**
-     * @var Session
-     */
-    private Session $customerSession;
-
-    /**
      * @var BrandHelper
      */
     private BrandHelper $brandHelper;
 
     /**
-     * @param Session $customerSession
      * @param BrandHelper $brandHelper
      */
     public function __construct(
-        Session $customerSession,
         BrandHelper $brandHelper
     ) {
-        $this->customerSession = $customerSession;
         $this->brandHelper = $brandHelper;
     }
 
