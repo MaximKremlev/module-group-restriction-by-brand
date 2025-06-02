@@ -19,8 +19,8 @@ use MaximKremlev\GroupRestrictionByBrand\Model\Attribute\Source\Brand;
  */
 class AddBrandAttribute implements DataPatchInterface, PatchRevertableInterface
 {
-    private const string ATTRIBUTE_LABEL = 'Brand';
-    private const string ATTRIBUTE_GROUP = 'General';
+    private const ATTRIBUTE_LABEL = 'Brand';
+    private const ATTRIBUTE_GROUP = 'General';
 
     /**
      * @var ModuleDataSetupInterface

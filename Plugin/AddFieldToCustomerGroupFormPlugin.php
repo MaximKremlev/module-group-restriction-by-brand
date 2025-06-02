@@ -20,12 +20,12 @@ class AddFieldToCustomerGroupFormPlugin
     /**
      * Form field name for restricted brands selection
      */
-    public const string FORM_FIELD_RESTRICTED_BRANDS = 'restricted_brands';
+    public const FORM_FIELD_RESTRICTED_BRANDS = 'restricted_brands';
 
     /**
      * Form field label for restricted brands
      */
-    private const string FORM_FIELD_LABEL = 'Restricted Brands';
+    private const FORM_FIELD_LABEL = 'Restricted Brands';
 
     /**
      * @var Brand

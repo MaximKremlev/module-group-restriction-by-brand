@@ -5,4 +5,8 @@
         <plugin name="maximkremlev_grouprestrictionbybrand_filter_product_collection"
                 type="MaximKremlev\GroupRestrictionByBrand\Plugin\ProductCollectionPlugin"/>
     </type>
+    <type name="Magento\CatalogSearch\Model\Layer\Filter\Attribute">
+        <plugin name="maximkremlev_grouprestrictionbybrand_attribute_filter"
+                type="MaximKremlev\GroupRestrictionByBrand\Plugin\AttributeFilterPlugin"/>
+    </type>
 </config>

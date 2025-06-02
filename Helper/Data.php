@@ -21,12 +21,12 @@ class Data extends AbstractHelper
     /**
      * Collection flag for brand filter
      */
-    public const string COLLECTION_FLAG_BRAND_FILTER_ADDED = 'brand_filter_added';
+    public const COLLECTION_FLAG_BRAND_FILTER_ADDED = 'brand_filter_added';
 
     /**
      * Brand attribute code
      */
-    public const string ATTRIBUTE_CODE_BRAND = 'brand';
+    public const ATTRIBUTE_CODE_BRAND = 'brand';
 
     /**
      * @var HttpContext

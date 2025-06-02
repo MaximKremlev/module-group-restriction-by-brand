@@ -16,10 +16,10 @@ use Magento\Framework\Model\ResourceModel\Db\AbstractDb;
  */
 class RestrictedBrands extends AbstractDb
 {
-    private const string TABLE_NAME = 'customer_group_restricted_brands';
-    private const string ENTITY_ID = 'entity_id';
-    private const string BRAND_ID = 'brand_id';
-    private const string CUSTOMER_GROUP_ID = 'customer_group_id';
+    private const TABLE_NAME = 'customer_group_restricted_brands';
+    private const ENTITY_ID = 'entity_id';
+    private const BRAND_ID = 'brand_id';
+    private const CUSTOMER_GROUP_ID = 'customer_group_id';
 
     /**
      * @inheritDoc
