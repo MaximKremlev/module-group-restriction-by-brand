@@ -8,6 +8,7 @@ use Magento\Customer\Model\Context as CustomerContext;
 use Magento\Framework\App\Helper\AbstractHelper;
 use Magento\Framework\App\Helper\Context;
 use Magento\Framework\App\Http\Context as HttpContext;
+use MaximKremlev\GroupRestrictionByBrand\Model\RestrictedProducts;
 use MaximKremlev\GroupRestrictionByBrand\Model\ResourceModel\RestrictedBrands;
 
 /**
@@ -29,6 +30,16 @@ class Data extends AbstractHelper
     public const ATTRIBUTE_CODE_BRAND = 'brand';
 
     /**
+     * Code for a collection flag
+     */
+    public const COLLECTION_FILTER_FLAG_CODE = 'restricted_customer_group_filter_applied';
+
+    /**
+     * Flag to skip brand restriction filter
+     */
+    public const SKIP_BRAND_RESTRICTION_FLAG = 'skip_brand_restriction';
+
+    /**
      * @var HttpContext
      */
     private HttpContext $httpContext;
@@ -39,25 +50,31 @@ class Data extends AbstractHelper
     private RestrictedBrands $restrictedBrands;
 
     /**
+     * @var RestrictedProducts
+     */
+    private RestrictedProducts $restrictedProducts;
+
+    /**
      * @param Context $context
      * @param HttpContext $httpContext
      * @param RestrictedBrands $restrictedBrands
+     * @param RestrictedProducts $restrictedProducts
      */
     public function __construct(
         Context $context,
         HttpContext $httpContext,
-        RestrictedBrands $restrictedBrands
+        RestrictedBrands $restrictedBrands,
+        RestrictedProducts $restrictedProducts
     ) {
         parent::__construct($context);
 
         $this->httpContext = $httpContext;
         $this->restrictedBrands = $restrictedBrands;
+        $this->restrictedProducts = $restrictedProducts;
     }
 
     /**
      * Check if customer is logged in
-     *
-     * Uses HttpContext to be compatible with page caching
      *
      * @return bool
      */
@@ -68,8 +85,6 @@ class Data extends AbstractHelper
 
     /**
      * Get current customer group id
-     *
-     * Uses HttpContext to be compatible with page caching
      *
      * @return int
      */
@@ -92,5 +107,23 @@ class Data extends AbstractHelper
         return $this->restrictedBrands->getRestrictedBrandIds(
             $this->getCurrentCustomerGroupId()
         );
+    }
+
+    /**
+     * Get restricted product ids for current customer group
+     *
+     * @return array
+     */
+    public function getRestrictedProductIds(): array
+    {
+        if (!$this->isCustomerLoggedIn()) {
+            return [];
+        }
+
+        if (!$restrictedBrands = $this->getRestrictedBrandIds()) {
+            return [];
+        }
+
+        return $this->restrictedProducts->getRestrictedProductIds($restrictedBrands);
     }
 }

@@ -9,6 +9,10 @@ use MaximKremlev\GroupRestrictionByBrand\Model\ResourceModel\RestrictedBrands as
 
 /**
  * Restricted Brands Model
+ *
+ * Class RestrictedBrands
+ * @package MaximKremlev\GroupRestrictionByBrand\Model
+ * /
  */
 class RestrictedBrands extends AbstractModel
 {

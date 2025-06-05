@@ -2,11 +2,11 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
     <type name="Magento\Catalog\Model\ResourceModel\Product\Collection">
-        <plugin name="maximkremlev_grouprestrictionbybrand_filter_product_collection"
-                type="MaximKremlev\GroupRestrictionByBrand\Plugin\ProductCollectionPlugin"/>
+        <plugin name="maximkremlev_grouprestrictionbybrand_product_load_before"
+                type="MaximKremlev\GroupRestrictionByBrand\Plugin\Catalog\Model\ResourceModel\Product\Collection" />
     </type>
-    <type name="Magento\CatalogSearch\Model\Layer\Filter\Attribute">
-        <plugin name="maximkremlev_grouprestrictionbybrand_attribute_filter"
-                type="MaximKremlev\GroupRestrictionByBrand\Plugin\AttributeFilterPlugin"/>
+    <type name="Magento\Catalog\Model\Layer">
+        <plugin name="maximkremlev_grouprestrictionbybrand_product_layer"
+                type="MaximKremlev\GroupRestrictionByBrand\Plugin\Catalog\Model\Layer" />
     </type>
 </config>
